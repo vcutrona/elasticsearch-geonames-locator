@@ -4,9 +4,9 @@ version := "1.0"
 
 scalaVersion := "2.11.8"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "2.1.0" % "provided"
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.1.0" % "provided"
-libraryDependencies += "org.elasticsearch" %% "elasticsearch-spark-20" % "5.1.1"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.2.0" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.2.0" % "provided"
+libraryDependencies += "org.elasticsearch" % "elasticsearch-hadoop" % "7.5.1"
 
 assemblyMergeStrategy in assembly := {
   case PathList("org","aopalliance", xs @ _*) => MergeStrategy.last
