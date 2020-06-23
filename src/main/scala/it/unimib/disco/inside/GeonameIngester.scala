@@ -1,5 +1,8 @@
 package it.unimib.disco.inside
 
+import java.io.FileInputStream
+import java.util.Properties
+
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{Encoder, SparkSession}
 import org.elasticsearch.spark.rdd.EsSpark
@@ -32,8 +35,20 @@ case class Geoname(geonameid: Int,
 object GeonameIngester {
 
   def main(args: Array[String]) {
+    val properties: Properties = new Properties()
+    properties.load(new FileInputStream("application.properties"))
+
+    val sparkMaster = properties.getProperty("spark_master")
+    val esNode = properties.getProperty("elastic_host")
+    val esPort = properties.getProperty("elastic_port")
+    val esWanOnly = properties.getProperty("elastic_wan_only")
+
     val sparkSession = SparkSession.builder
-      .master("local")
+      .master(sparkMaster)
+      .config("es.nodes", esNode)
+      .config("es.port", esPort)
+      .config("es.nodes.wan.only", esWanOnly)
+//      .config("es.nodes.discovery", value = false)
       .appName("GeonameIngester")
       .getOrCreate()
 
