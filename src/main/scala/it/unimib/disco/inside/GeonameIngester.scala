@@ -41,6 +41,7 @@ object GeonameIngester {
     val sparkMaster = properties.getProperty("spark_master")
     val esNode = properties.getProperty("elastic_host")
     val esPort = properties.getProperty("elastic_port")
+    val esIndexName = properties.getProperty("elastic_index_name")
     val esWanOnly = properties.getProperty("elastic_wan_only")
 
     val sparkSession = SparkSession.builder
@@ -114,7 +115,7 @@ object GeonameIngester {
         )
     }
 
-    EsSpark.saveToEs(records.toJavaRDD, "geonames/geoname", Map("es.mapping.id" -> "geonameid"))
+    EsSpark.saveToEs(records.toJavaRDD, esIndexName, Map("es.mapping.id" -> "geonameid"))
 
   }
 
